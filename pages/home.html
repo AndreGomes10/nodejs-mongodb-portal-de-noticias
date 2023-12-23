@@ -1,0 +1,80 @@
+<%- include('partials/header.html') %> <!-- usando ejs, incluir uma forma dinamica uma parte do nosso site e pode fazer quants vezes quiser -->
+
+        <section class="noticia-destaque">
+            <div class="center">
+                <div class="img-destaque">
+                    <div class="overlay-destaque"></div>
+                    <div class="title-destaque-descricao">
+                        <!--<a href="/slug-aqui"><h2>Comece a estudar bem</h2></a>-->
+                        <a href="<%= posts[0].slug %>"><h2><%= posts[0].titulo %></h2></a>
+                        <!--<p>A praia é um refúgio encantador onde a terra encontra o mar.</p>-->
+                        <p><%= posts[0].descricaoCurta %>...</p>
+                    </div>
+                    <!--<img src="/public/images/landscape.jpg" />-->
+                    <img src="<%= posts[0].imagem %>" />
+                </div>
+            </div>
+        </section>
+
+        <section class="outras-noticias">
+            <div class="title-outras-noticia">
+                <h2>Últimas Notícias</h2>
+                <br><br>
+                <div class="center">
+                    <div class="ultimas">
+
+                        <!-- começa da posição 1, porque 0 é a imagem de destaque -->
+                        <% for(let i = 1; i < posts.length; i++) { %>
+                        <div class="box-ultima-single">
+                            <img src="<%= posts[i].imagem %>" alt="">
+                            <div class="conteudo-noticia-sigle">
+                                <h3><%= posts[i].categoria %></h3>
+                                <h2><%= posts[i].titulo %></h2>
+                                <p><%= posts[i].descricaoCurta %></p>
+                                <a href="<%= posts[i].slug %>">Saiba mais</a>
+                            </div>
+                        </div>
+                        <% } %>
+                        <!--<div class="box-ultima-single">
+                            <img src="/public/images/noticia.png" alt="">
+                            <div class="conteudo-notici-single">
+                                <h3>Natureza e Geral</h3>
+                                <h2>Como Encarar o Surf em Floripa</h2>
+                                <p>A água gelada e o vento pode acabar com a sua felicidade de ir para a água. 
+                                    Cientistas afirmam que a chance de hipotermia é real e você precisa se cuidar. Veja como.</p>
+                                    <a href="/encarar-o-surf">Saiba mais</a>
+                            </div>
+                        </div>-->
+                    </div>
+
+                    <div class="mais-lidas">
+                        <h3>Mais Lidas</h3>
+                        <div class="mais-lidas-noticias">
+                            
+                            <% for(let i = 0; i < posts.length; i++) { %>
+                            <div class="mais-lida-noticia-single">
+                                <img src="<%= posts[i].imagem %>" />
+                                <div class="texto-mais-lida-single">
+                                    <h4><%= posts[i].titulo %></h4>
+                                    <p><%= posts[i].descricaoCurta %>...</p>
+                                    <a href="<%= posts[i].slug %>">Saiba mais</a>
+                                </div>
+                            </div>
+                            <% } %>
+                            <!--<div class="mais-lida-noticia-single">
+                                <img src="/public/images/MUNDOANIMAL.png" />
+                                <div class="texto-mais-lida-single">
+                                    <h4>Natureza</h4>
+                                    <p>Com idade avançada, leão do Parque Dois Irmãos é diagnosticado com câncer e recebe tratamento. Espécie está ameaçada de extinção.</p>
+                                    <a href="/encarar-o-surf">Saiba mais</a>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('partials/footer.html') %>
+    </body>
+</html>

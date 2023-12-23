@@ -1,0 +1,8 @@
+Instalar
+    npm install express body-parser ejs
+
+    Faça o downgrade do mongoose porque as versões atuais não aceitam callback, rode o seguinte:
+        npm install mongoose@6.10.0
+
+packege.json
+    "start": "nodemon ./index.js localhost 5000"
