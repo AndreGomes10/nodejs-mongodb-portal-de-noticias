@@ -26,7 +26,15 @@ const Posts = mongoose.model(  // vai inserir o schema dentro
         type: String,
         required: true,
       },
-  }),
+      autor: {
+        type: String,
+        required: true,
+      },
+      views: {
+        type: Number,
+        required: true,
+      },
+  }, {colletction: 'posts'}),
 )
 
 module.exports = Posts
@@ -39,7 +47,9 @@ var postSchema = new Schema({
     imagem: String,
     categoria: String,
     conteudo: String,
-    slug: String
+    slug: String,
+    autor: String,
+    views: Number
 }, {collection: 'posts'})
 
 var Posts = mongoose.model('Posts', postSchema)

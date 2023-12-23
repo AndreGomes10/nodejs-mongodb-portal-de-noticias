@@ -44,21 +44,74 @@ app.get('/', (req, res) => {
                 }
             })
 
-
-
-            res.render('home', {posts: posts})  // posts é o que estamos recuperando
+            Posts.find({}).sort({'views': -1}).limit(3).exec(function(err,postsTop){  // limit ele não vai passar de 3 noticias
+                // console.log(posts[0]);
+                 postsTop = postsTop.map(function(val){
+                         return {
+                             titulo: val.titulo,
+                             conteudo: val.conteudo,
+                             descricaoCurta: val.conteudo.substr(0,100),
+                             imagem: val.imagem,
+                             slug: val.slug,
+                             categoria: val.categoria,
+                             views: val.views
+                         }
+                 })
+                 res.render('home',{posts:posts,postsTop:postsTop});  // posts é o que estamos recuperando
+             })
         })
     } else{
-        //res.send('Você buscou: ' +req.query.busca)
-        res.render('busca', {})
+
+        // busca personalizada
+        // regex, quando quer buscar por textos parciais, do tipo i
+        Posts.find({titulo: {$regex: req.query.busca,$options:"i"}}, function(err,posts){
+            console.log(posts);
+            posts = posts.map(function(val){
+                return {
+                    titulo: val.titulo,
+                    conteudo: val.conteudo,
+                    descricaoCurta: val.conteudo.substr(0,100),
+                    imagem: val.imagem,
+                    slug: val.slug,
+                    categoria: val.categoria,
+                    views: val.views
+                }
+        })
+            res.render('busca',{posts:posts,contagem:posts.length});
+        })
     }
+
 })
 
-app.get('/:slug', (req, res) => {
+app.get('/:slug',(req,res) => {
     // slug, é o texto que aparece logo após o seu domínio como parte do link permanente que leva até o conteúdo
     // ele vai para o caminho que digitar depois do link
     //res.send(req.params.slug)
-    res.render('single', {})
+
+    // fazer uma query pra achar o que eu quero e vai atualizar e recuperar ele
+    Posts.findOneAndUpdate({slug: req.params.slug}, {$inc : {views: 1}}, {new: true},function(err,resposta){
+        // console.log(resposta);
+       if(resposta != null){
+
+        Posts.find({}).sort({'views': -1}).limit(3).exec(function(err,postsTop){
+            // console.log(posts[0]);
+             postsTop = postsTop.map(function(val){
+                     return {
+                         titulo: val.titulo,
+                         conteudo: val.conteudo,
+                         descricaoCurta: val.conteudo.substr(0,100),
+                         imagem: val.imagem,
+                         slug: val.slug,
+                         categoria: val.categoria,
+                         views: val.views
+                     }
+             })
+             res.render('single',{noticia:resposta,postsTop:postsTop});  // vai passar as informações da noticia que vai ser a minha resposta
+            })        
+       }else{
+           res.redirect('/');
+       }
+    })
 })
 
 app.listen(5000, () => {
