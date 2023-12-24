@@ -1,5 +1,7 @@
 Instalar
     npm install express body-parser ejs
+    npm install express-session
+    npm install express-fileupload
 
     Faça o downgrade do mongoose porque as versões atuais não aceitam callback, rode o seguinte:
         npm install mongoose@6.10.0

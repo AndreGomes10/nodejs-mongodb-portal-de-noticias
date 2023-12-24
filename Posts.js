@@ -26,14 +26,14 @@ const Posts = mongoose.model(  // vai inserir o schema dentro
         type: String,
         required: true,
       },
-      autor: {
-        type: String,
-        required: true,
-      },
       views: {
         type: Number,
         required: true,
       },
+      autor: {
+        type: String,
+        required: true,
+      }
   }, {colletction: 'posts'}),
 )
 
